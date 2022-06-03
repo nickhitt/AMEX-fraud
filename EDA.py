@@ -35,5 +35,7 @@ def missing_values_table(df):
     return mis_val_table_ren_columns
 
 train_missing_vals = missing_values_table(train_df)
+train_missing_vals.head(10) ## checking
 
-train_missing_vals.head(10)
+# Checking data types in df
+train_df.dtypes.value_counts()
