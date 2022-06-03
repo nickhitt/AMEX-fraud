@@ -1,4 +1,4 @@
-exec(open("load_data.py").read())
+#exec(open("load_data.py").read())
 
 ### Distribution of target vars
 
@@ -39,3 +39,27 @@ train_missing_vals.head(10) ## checking
 
 # Checking data types in df
 train_df.dtypes.value_counts()
+
+### Encoding for categorical variables
+var_cat = ['B_30', 'B_38', 'D_114', 'D_116', 'D_117', 'D_120', 'D_126', 'D_63', 'D_64', 'D_66', 'D_68']
+
+# Create a label encoder object
+le = LabelEncoder()
+le_count = 0
+
+# Iterate through the columns
+for col in train_df:
+    if col in var_cat:
+        # If 2 or fewer unique categories
+        if len(list(train_df[col].unique())) <= 2:
+            # Train on the training data
+            le.fit(train_df[col])
+            # Transform both training and testing data
+            train_df[col] = le.transform(train_df[col])
+            test_df[col] = le.transform(test_df[col])
+            # Keep track of how many columns were label encoded
+            le_count += 1
+        else:
+            train_df[col] = pd.get_dummies(train_df[col])
+            test_df[col] = pd.get_dummies(test_df[col])
+
