@@ -79,5 +79,14 @@ train_df, test_df = train_df.align(test_df, join = 'inner', axis = 1)
 # Add the target back in
 train_df['target'] = train_labels
 
+# Checking shapes
 print('Training Features shape: ', train_df.shape)
 print('Testing Features shape: ', test_df.shape)
+
+#Correlations
+# Find correlations with the target and sort
+correlations = train_df.corr()['target'].sort_values()
+
+# Display correlations
+print('Most Positive Correlations:\n', correlations.tail(15))
+print('\nMost Negative Correlations:\n', correlations.head(15))
