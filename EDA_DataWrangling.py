@@ -43,23 +43,31 @@ train_df.dtypes.value_counts()
 ### Encoding for categorical variables
 var_cat = ['B_30', 'B_38', 'D_114', 'D_116', 'D_117', 'D_120', 'D_126', 'D_63', 'D_64', 'D_66', 'D_68']
 
-# Create a label encoder object
-le = LabelEncoder()
-le_count = 0
+def one_hot(df, subset):
+    x = pd.get_dummies(df[subset])
+    names = []
+    for i in range(1,len(x.columns)+1):
+        names.append(subset + '_' + str(i))
+    x.columns = names
+    return x
 
-# Iterate through the columns
-for col in train_df:
+one_hot_count = 0
+
+# Encoding by iterating through the columns
+for col in train_df.columns:
     if col in var_cat:
-        # If 2 or fewer unique categories
-        if len(list(train_df[col].unique())) <= 2:
-            # Train on the training data
-            le.fit(train_df[col])
-            # Transform both training and testing data
-            train_df[col] = le.transform(train_df[col])
-            test_df[col] = le.transform(test_df[col])
-            # Keep track of how many columns were label encoded
-            le_count += 1
-        else:
-            train_df[col] = pd.get_dummies(train_df[col])
-            test_df[col] = pd.get_dummies(test_df[col])
+        # Encode the training and testing data
+        temp_train = one_hot(train_df, col)
+        temp_test = one_hot(test_df, col)
+        # Drop column to encode
+        train_df.drop(col, axis=1)
+        test_df.drop(col, axis=1)
+        # Bind encoded data to df
+        train_df = pd.concat([train_df, temp_train], axis=1)
+        test_df = pd.concat([test_df, temp_test], axis=1)
+        # Keep track of how many columns were one hot encoded
+        one_hot_count += 1
+        # Cleaning temp vars
+        temp_train = None
+        temp_test = None
 
