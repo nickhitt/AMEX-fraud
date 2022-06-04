@@ -71,3 +71,13 @@ for col in train_df.columns:
         temp_train = None
         temp_test = None
 
+train_labels = train_df['target']
+
+# Align the training and testing data, keep only columns present in both dataframes
+train_df, test_df = train_df.align(test_df, join = 'inner', axis = 1)
+
+# Add the target back in
+train_df['target'] = train_labels
+
+print('Training Features shape: ', train_df.shape)
+print('Testing Features shape: ', test_df.shape)
