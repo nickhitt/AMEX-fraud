@@ -90,3 +90,7 @@ correlations = train_df.corr()['target'].sort_values()
 # Display correlations
 print('Most Positive Correlations:\n', correlations.tail(15))
 print('\nMost Negative Correlations:\n', correlations.head(15))
+
+# Heatmap of all correlations
+plt.figure(figsize=(12,6))
+sns.heatmap(train_df,cmap='viridis')
