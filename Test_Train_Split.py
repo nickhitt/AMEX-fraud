@@ -14,5 +14,5 @@ y_train = train_data['target']
 X_test = valid_data.drop(['customer_ID', 'S_2', 'target'], axis=1)
 y_test = valid_data['target']
 
-X_real_test = test_df.drop(['customer_ID', 'S_2'], axis=1)
+#X_real_test = test_df.drop(['customer_ID', 'S_2'], axis=1)
 
