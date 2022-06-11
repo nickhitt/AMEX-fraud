@@ -5,7 +5,6 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import balanced_accuracy_score
 from matplotlib.pylab import rcParams
 import time
-rcParams['figure.figsize'] = 12, 4
 
 # Initial Model
 
