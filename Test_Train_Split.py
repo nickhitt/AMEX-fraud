@@ -23,6 +23,7 @@ y_train = train_data['target']
 X_test = valid_data.drop(['customer_ID', 'S_2', 'target'], axis=1)
 y_test = valid_data['target']
 
+# Scaling data
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
