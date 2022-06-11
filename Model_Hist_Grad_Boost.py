@@ -42,6 +42,34 @@ et = time.time() # End time
 elapsed_time = et - st
 print('Execution time:', elapsed_time, 'seconds')
 
+# Accuracy
+accuracy = model_grid_search.score(X_train, y_train)
+print(
+    f"The test accuracy score of the grid-searched pipeline is: "
+    f"{accuracy:.2f}"
+)
+
+model_grid_search.predict(X_train.iloc[0:5])
+print(f"The best set of parameters is: "
+      f"{model_grid_search.best_params_}")
+
+cv_results = pd.DataFrame(model_grid_search.cv_results_).sort_values(
+    "mean_test_score", ascending=False)
+cv_results.head()
+
+# get the parameter names
+column_results = [f"param_{name}" for name in param_grid.keys()]
+column_results += [
+    "mean_test_score", "std_test_score", "rank_test_score"]
+cv_results = cv_results[column_results]
+
+def shorten_param(param_name):
+    if "__" in param_name:
+        return param_name.rsplit("__", 1)[1]
+    return param_name
+
+cv_results = cv_results.rename(shorten_param, axis=1)
+cv_results
 
 
 
