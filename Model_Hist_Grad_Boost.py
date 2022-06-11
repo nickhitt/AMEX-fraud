@@ -70,8 +70,9 @@ def shorten_param(param_name):
 cv_results = cv_results.rename(shorten_param, axis=1)
 cv_results
 
-
-
+y_pred_train = model_grid_search.predict(X_train.iloc[0])
+f1 = f1_score(y_train, y_pred_train, zero_division=1)
+print(f1)
 
 
 
